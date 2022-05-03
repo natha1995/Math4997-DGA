@@ -1,0 +1,85 @@
+from typing import final
+
+
+N = int(input())
+List = []
+newN = 0
+i = 1
+while N > i:
+    newN = N - i
+    i = i+1
+    List.append(newN)
+    #print(List)
+    #print (newN, end =" " )
+
+i = 2
+#print(List, end = '')
+List3 = []
+List3 =  List3 + List
+List2 = []
+while N > i:    
+    List.pop(N-i)
+    #print(List)
+    i = i+1
+    List2 = List2 + List
+    #print(List2)
+
+# Half twist code
+finalList = List3 + List2
+#print(finalList)
+
+#input Beta
+beta = []
+n = int(input("Enter number of elements : "))
+for i in range(0, n):
+    ele = int(input())
+    beta.append(ele)
+
+#print(beta)
+
+newBeta = []
+newBeta = beta + finalList
+print(newBeta)
+#Beta and List from N
+topChoice = ''
+topStrand = ''
+topChoiceList = []
+bottomChoice = ''
+bottomStrand = ''
+bottomChoiceList = []
+
+#Left Top Strands
+while newBeta.__len__ > 0:
+    if newBeta[i]-1 == newBeta[i-1]:
+        if topChoice == newBeta(i-1)+1:
+            topChoiceList.append(i-1)
+            topStrand = newBeta[i]
+            bottomStrand = newBeta(i)+1
+        else:
+            topChoiceList.append('')
+            topStrand = newBeta[i]-1
+            bottomStrand = newBeta(i)+1
+
+    elif newBeta[i] != newBeta[i-1] and newBeta[i]-1 != newBeta[i-1]:
+        topChoiceList.append('')
+        topStrand = newBeta[i]
+    else:
+        break
+    #Left Bottom Strands
+while newBeta.__len__ != 0:
+    if newBeta[i-1] == newBeta[i]+1:
+        if bottomChoice == newBeta[i]+1:
+            bottomChoiceList.append(i-1)
+            bottomStrand= newBeta[i]+1
+            topStrand = newBeta[i]
+        else:
+            bottomChoiceList.append('')
+            topStrand = newBeta[i]
+            bottomStrand= newBeta[i]+2
+    elif newBeta[i] != newBeta[i-1] and newBeta[i-1] != newBeta[i]+1:
+        bottomChoiceList.append('')
+        bottomStrand = newBeta[i]+1
+    else:
+        break
+
+    #This is checking 
