@@ -1,0 +1,142 @@
+#Author: Natalia Arce
+#Algorithm done by Justin Murray, Natalia Arce and Allison Farr
+#Date: May 7, 2022
+
+import difflib
+from typing import final
+
+#Purpose for Code: Compute the DGA - for knots in S1xS2 
+# number of strands = N
+N = int(input())
+#Makes Half twists in strands
+List = []
+#grabs new number from the subtraction of N-i (below) and stores it in new list
+newN = 0
+#number used to subtract 1 from the N - # of braids so that we get a decreasing
+#number from left to right excluding N
+i = 1
+while N > i:
+    newN = N - i
+    i = i+1
+    #adds the difference between N and i to the list
+    List.append(newN)
+#To be able to subtract the last number of the list - We need to have i be equal to 2
+#For example if we have N=5 then 5-2 = 3 so index number 3 will be deleted which is the
+#last index of the list (last index on the right of list)
+i = 2
+#print(List, end = '')
+#To store the previous list of N - decreasing to 1, we have List3[]
+List3 = []
+#Creating a new list because for some reason when I added List + List2, it did not work so
+#created a List3 to store the List and then add it to List2
+List3 =  List3 + List
+#List2 is to add the decreasing lists - the lists created after removing the last number until we get to N-1
+List2 = []
+while N > i:    
+    List.pop(N-i)
+    i = i+1
+    List2 = List2 + List
+
+# Half twist code
+#The finalList contains the List2 and List3 (in other words, the original List)
+finalList = List3 + List2
+#print(finalList)
+
+#input Beta
+beta = []
+n = int(input("Enter number of elements : "))
+for i in range(0, n):
+    ele = int(input())
+    beta.append(ele)
+
+#print(beta)
+#newBeta is a list created to add the beta list (input) and the finalList (half twist)
+newBeta = []
+newBeta = beta + finalList
+print(newBeta)
+topChoice = ''
+topStrand = ''
+topChoiceList = []
+bottomChoice = ''
+bottomStrand = ''
+bottomChoiceList = []
+#The beginning to compute the differential of the Left side of the braid - The Algorithm part of the project starts here!
+#Left Top Strands
+while len(newBeta) > 0:
+    if newBeta[i]-1 == newBeta[i-1]:
+        if topChoice == newBeta(i-1)+1:
+            topChoiceList.append(i-1)
+            topStrand = newBeta[i]
+            bottomStrand = newBeta(i)+1
+        else:
+            topChoiceList.append('')
+            topStrand = newBeta[i]-1
+            bottomStrand = newBeta(i)+1
+
+    elif newBeta[i] != newBeta[i-1] and newBeta[i]-1 != newBeta[i-1]:
+        topChoiceList.append('')
+        topStrand = newBeta[i]
+    else:
+        break
+
+    #Left Bottom Strands
+while newBeta.__len__ != 0:
+    if newBeta[i-1] == newBeta[i]+1:
+        if bottomChoice == newBeta[i]+1:
+            bottomChoiceList.append(i-1)
+            bottomStrand= newBeta[i]+1
+            topStrand = newBeta[i]
+        else:
+            bottomChoiceList.append('')
+            topStrand = newBeta[i]
+            bottomStrand= newBeta[i]+2
+    elif newBeta[i] != newBeta[i-1] and newBeta[i-1] != newBeta[i]+1:
+        bottomChoiceList.append('')
+        bottomStrand = newBeta[i]+1
+    else:
+        break
+
+    #This is checking - Top part
+    topChoiceList2 =[]
+    diffLeft = []
+if topStrand >= bottomStrand:
+    diffLeft.append([])
+else:
+    while i >= 0:
+        for n in range(2, i):
+            if topStrand != newBeta[i-n] and topStrand-1 != newBeta[i-2]:
+                topStrand = topStrand
+            else:
+                continue
+            if topStrand-1 == newBeta[i-n]:
+                if topStrand == topStrand:
+                    topChoiceList2.append(newBeta[i-n])
+                    topStrand = topStrand
+                else:
+                    topChoiceList2.append('')
+                    topStrand = newBeta[i-n]
+            else:
+                continue
+            if topStrand == newBeta[i-2]:
+                if bottomStrand == topStrand +1:
+                    continue
+                else:
+                    topChoiceList2.append('')
+                    topStrand = newBeta[i-n]+1
+            else:
+                continue
+#This is checking - Bottom part
+bottomChoiceList2 = []
+if topStrand >= bottomStrand:
+    diffLeft.append('')
+else:
+    while i >= 0:
+        for n in range(2, i):
+            if bottomStrand +1 == newBeta[i-n]:
+                bottomStrand = newBeta[i-n]
+            else:
+                if bottomStrand == newBeta[i-n]:
+                    bottomStrand = bottomStrand
+                    bottomChoiceList2.append(i-n)
+                else:
+                    bottomStrand = bottomStrand+1
